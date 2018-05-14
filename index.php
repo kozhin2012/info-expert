@@ -18,7 +18,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 <div class="col-10 -wide">
 
-<h1 class="">Жюри</h1>
+<h1 class="">Жюри2</h1>
 
 
 <div class="row-10 wrap-10 grid-5 GRID-tablet-2  GRID-mobile-1 gap-5 GAP-tablet-5 GAP-mobile-5 -wide">
