@@ -22,7 +22,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 <h1 class="">Жюри</h1>
 
 
-<div class="row-10 wrap-10 grid-5 GRID-tablet-2  GRID-mobile-1 gap-5 GAP-tablet-5 GAP-mobile-5 -wide">
+<div class="row-010 wrap-10 -top grid-5 GRID-notebook-3 GRID-tablet-2  GRID-mobile-1 gap-5 GAP-notebook-5 GAP-tablet-5 GAP-mobile-5 -wide">
 
     <div>
 		<a class="row-10 -top serg_item" href="#">
@@ -46,7 +46,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 		<a class="row-10 -top serg_item" href="#">
 			<div class="frame_item_image" style="background-image:url(img/ico_03.png);"></div>
 			<div class="frame_item_descr col-10 -left">
-				<div class="descr_h1">Иванов Иван</div>
+				<div class="descr_h1">Иванов Иван Иванович</div>
 				<div class="descr_date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
 			</div>
 		</a>
@@ -55,7 +55,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 		<a class="row-10 -top serg_item" href="#">
 			<div class="frame_item_image" style="background-image:url(img/ico_04.png);"></div>
 			<div class="frame_item_descr col-10 -left">
-				<div class="descr_h1">Иванов Иван</div>
+				<div class="descr_h1">Иванова Ангелина Абдурахмановна</div>
 				<div class="descr_date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
 			</div>
 		</a>
@@ -64,12 +64,11 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 		<a class="row-10 -top serg_item" href="#">
 			<div class="frame_item_image" style="background-image:url(img/ico_05.png);"></div>
 			<div class="frame_item_descr col-10 -left">
-				<div class="descr_h1">Иванов Иван</div>
+				<div class="descr_h1">Апу Нахасапимапетилон</div>
 				<div class="descr_date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
 			</div>
 		</a>
 	</div>
-	<div class="-HIDE"></div>
     <div>
 		<a class="row-10 -top serg_item" href="#">
 			<div class="frame_item_image" style="background-image:url(img/ico_06.png);"></div>
@@ -79,17 +78,16 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 			</div>
 		</a>
 	</div>
-	<div class="-HIDE"></div>
     <div>
 		<a class="row-10 -top serg_item" href="#">
 			<div class="frame_item_image" style="background-image:url(img/ico_07.png);"></div>
 			<div class="frame_item_descr col-10 -left">
-				<div class="descr_h1">Иванов Иван</div>
+				<div class="descr_h1">Иванов Иван Петрович</div>
 				<div class="descr_date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
 			</div>
 		</a>
 	</div>
-	<div class="-HIDE"></div>
+
 
 </div>
 
