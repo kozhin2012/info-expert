@@ -1,7 +1,8 @@
 <?
 /*require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Подтверждение заявки на почту");*/
-?><!DOCTYPE HTML>
+?>
+<!DOCTYPE HTML>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,7 +19,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 <div class="col-10 -wide">
 
-<h1 class="">Жюри2</h1>
+<h1 class="">Жюри</h1>
 
 
 <div class="row-10 wrap-10 grid-5 GRID-tablet-2  GRID-mobile-1 gap-5 GAP-tablet-5 GAP-mobile-5 -wide">
@@ -104,15 +105,16 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 <br><br><br><br>
 
-<h1>Регистрация</h1>
+
 <div class="SOURCE">
 	<form class="serg_form col-10">
+		<h1>Регистрация</h1>
 
 		<label for="ClientName">Имя:</label>
-		<input id="ClientName" type="text" name="ClientName" required>
+		<input type="text" name="ClientName" required>
 	
 		<label for="ClientEmail">Email:</label>
-		<input id="ClientEmail" type="email" name="ClientEmail" required>
+		<input type="email" name="ClientEmail" required>
 	
 	
 		<button class="serg_button form_sub" name="ClientWhat" type="submit">Зарегистрироваться</button>
@@ -124,7 +126,43 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 </div>
 
+<style>
+	#SERG_modal{
+    position: fixed;
+    min-width: 300px;
+    width: 100vw;
+	max-width:100vw;
+    min-height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999999;
+    margin: 0!important;
+    padding: 0!important;
+	}
 
+	#SERG_modal form{
+		max-width: 800px;
+		width: 90%;
+		background-color: white;
+		border-radius: 10px;
+		padding: 50px;
+	}
+</style>
+
+<div id="SERG_modal" class="col-010 -hide">
+	<form class="serg_form col-10">
+		<h1>Регистрация</h1>
+
+		<label for="ClientName">Имя:</label>
+		<input type="text" name="ClientName" required>
+	
+		<label for="ClientEmail">Email:</label>
+		<input type="email" name="ClientEmail" required>
+	
+
+		<button class="serg_button form_sub" name="ClientWhat" type="submit">Зарегистрироваться</button>
+
+	</form>
+</div>
 
 
 
@@ -134,23 +172,23 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 
 
+
 <script>
 $( document ).ready(function() {
 
     console.log("ready!");
 
 
-	//САБМИТ ОТПРАВКИ ФОРМЫ START
-	$( ".serg_form" ).on( "submit", function( event ) {
-	  event.preventDefault();
-	  
-	  var thiss = $( this );
-	  
+	function afterFormSubmit(thiss){
+
 	  var formdata = thiss.serialize();
 	  var buttondata = thiss.find('button[name=ClientWhat]').text();
 	  
 	  console.log( formdata + "&ClientWhat=" + buttondata );
-	 
+
+	  $('#SERG_modal').addClass('-hide');
+	  $('input').val("");
+
 
 		$.ajax({
 			type: "POST",
@@ -177,40 +215,48 @@ $( document ).ready(function() {
 			}
 
 		});
-	
+
+	}
+
+
+
+
+
+	//САБМИТ ОТПРАВКИ ФОРМЫ START
+	$( ".serg_form" ).on( "submit", function( event ) {
+		event.preventDefault();
+		var thiss = $( this );
+		afterFormSubmit(thiss);
+	});
+
+	//Закрываем модалку при скролле
+	$(window).scroll(function() {
+		$('#SERG_modal').addClass('-hide');
+	});
+
+
+
+	//Вызываем модалку
+	$('.form_init').click(function () {
+		$('#SERG_modal').removeClass('-hide');
 	});
 
 
 
 
 
-/*КЛИК ПО ОТПРАВКЕ ФОРМЫ ИЗ МОДАЛЬНОГО ОКОШКА*/
-$(document).on('click', '.sweet-alert .form_sub', function (event) {
-	event.preventDefault();
-	
-	console.log($( this ));
-	var thiss = $( this ).closest("form");
-	console.log(thiss);
+	//Убираем модалку при клике вне формы
+	$('#SERG_modal').click(function (e) {
+		//e.preventDefault();
 
-});
-
-
-
-
-var formHtml = $(".SOURCE").html();
-$('.form_init').click(function () {
-
-	swal({
-		title: 'Регистрация',
-		html: true,
-		text: formHtml,
-		showCancelButton: false,
-		showConfirmButton: false,
-		allowOutsideClick: true
-	})
+		var div = $("#SERG_modal .serg_form"); // тут указываем ID элемента
+		if (!div.is(e.target) // если клик был не по нашему блоку
+		    && div.has(e.target).length === 0) { // и не по его дочерним элементам
+			$("#SERG_modal").addClass('-hide'); // скрываем его
+		}
+	});
 
 
-});
 
 
 
@@ -220,7 +266,8 @@ $('.form_init').click(function () {
 
 
 </body>
-</html><?
+</html>
+<?
 /*
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");
 */
