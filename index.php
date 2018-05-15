@@ -94,7 +94,11 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 
 
-
+<style>
+	.form_elem_container{
+		margin:10px;
+	}
+</style>
 
 
 
@@ -108,11 +112,17 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 	<form class="serg_form col-10">
 		<h1>Регистрация</h1>
 
-		<label for="ClientName">Имя:</label>
-		<input type="text" name="ClientName" required>
-	
-		<label for="ClientEmail">Email:</label>
-		<input type="email" name="ClientEmail" required>
+		<div class="row-01010 COL-10">
+			<div class="col-10 form_elem_container">
+				<label for="ClientName">Имя:</label>
+				<input type="text" name="ClientName" required>
+			</div>
+
+			<div class="col-10 form_elem_container">
+				<label for="ClientEmail">Email:</label>
+				<input type="email" name="ClientEmail" required>
+			</div>
+		</div>
 	
 	
 		<button class="serg_button form_sub" name="ClientWhat" type="submit">Зарегистрироваться</button>
