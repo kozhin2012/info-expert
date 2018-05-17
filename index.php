@@ -19,7 +19,8 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 <div class="col-10 -wide">
 
-<h1 class="">Жюри</h1>
+<h1 class="">Жюри2</h1>
+
 
 
 <div class="row-010 wrap-10 -top grid-5 GRID-notebook-3 GRID-tablet-2  GRID-mobile-1 gap-5 GAP-notebook-5 GAP-tablet-5 GAP-mobile-5 -wide">
@@ -98,6 +99,16 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 	.form_elem_container{
 		margin:10px;
 	}
+
+	.inputError{
+		border: solid red;
+    	color: red;
+	}
+
+	.errorDescription{
+		color:red;
+		font-size:.7em;
+	}
 </style>
 
 
@@ -114,13 +125,15 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 		<div class="row-01010 COL-10">
 			<div class="col-10 form_elem_container">
-				<label for="ClientName">Имя:</label>
+				<label for="ClientName">Имя*:</label>
 				<input type="text" name="ClientName" required>
+				<div class="errorDescription"></div>
 			</div>
 
 			<div class="col-10 form_elem_container">
-				<label for="ClientEmail">Email:</label>
+				<label for="ClientEmail">Email*:</label>
 				<input type="email" name="ClientEmail" required>
+				<div class="errorDescription"></div>
 			</div>
 		</div>
 	
@@ -154,6 +167,24 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 		border-radius: 10px;
 		padding: 50px;
 	}
+
+    .disableSelect {
+        -webkit-user-select: none;  /* Chrome all / Safari all */
+        -moz-user-select: none;     /* Firefox all */
+        -ms-user-select: none;      /* IE 10+ */
+        user-select: none;          /* Likely future */
+        cursor: wait;
+        pointer-events: none;
+    }
+
+    .disableSelect input,
+    .disableSelect button{
+        background-color: #9c9c9c!important;
+    }
+
+
+
+
 </style>
 
 <div id="SERG_modal" class="col-010 -hide">
@@ -187,23 +218,35 @@ $( document ).ready(function() {
     console.log("ready!");
 
 
+	function refreshModalState(){
+		$('input').val("");
+		$('#SERG_modal').removeClass('disableSelect');
+		$('#SERG_modal').addClass('-hide');
+	}
+
+
 	function afterFormSubmit(thiss){
+
+	  validateEmail(thiss);
 
 	  var formdata = thiss.serialize();
 	  var buttondata = thiss.find('button[name=ClientWhat]').text();
 	  
 	  console.log( formdata + "&ClientWhat=" + buttondata );
 
-	  $('#SERG_modal').addClass('-hide');
-	  $('input').val("");
+	  //Фризим модалку до получения ответа от сервера
+	  $('#SERG_modal').addClass('disableSelect');
 
 
-		$.ajax({
+        $.ajax({
 			type: "POST",
 			url: "add_to_infoblock.php",
+			timeout:5000,
 			data: formdata + "&ClientWhat=" + buttondata
 		}).done(function (response) {
+
 			console.log(response);
+			refreshModalState();
 
 			if(response == "Для завершения регистрации пройдите по ссылке из письма."){
 				swal({
@@ -222,25 +265,55 @@ $( document ).ready(function() {
 				});
 			}
 
+		}).fail(function(jqXHR, textStatus){
+
+			refreshModalState();
+
+			swal({
+				type: "error",
+				title: "<small>Ошибка!</small>",
+				text: "Не удалось зарегистрироваться.",
+				html: true
+			});
 		});
 
 	}
 
 
+	//Дополнительная валидация email
+	function validateEmail(thiss){
+		var emailvalue = thiss.find('input[name=ClientEmail]').val();
+		var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
+		if(pattern.test(emailvalue)){
+			return "OK";
+		}
+		else{
+			return "NO";
+		}
+	}
 
 
 
-	//САБМИТ ОТПРАВКИ ФОРМЫ START
+	//ВАЛИДАЦИЯ ФОРМЫ START
 	$( ".serg_form" ).on( "submit", function( event ) {
 		event.preventDefault();
 		var thiss = $( this );
-		afterFormSubmit(thiss);
-	});
 
-	//Закрываем модалку при скролле
-	$(window).scroll(function() {
-		$('#SERG_modal').addClass('-hide');
+		if(validateEmail(thiss) == "OK"){
+			afterFormSubmit(thiss);
+		}
+		else{
+			swal({
+				type: "error",
+				title: "<small>Ошибка!</small>",
+				text: "Введённый email не корректен.",
+				html: true
+			});
+		}
+
 	});
+	//ВАЛИДАЦИЯ ФОРМЫ END
+
 
 
 
@@ -248,6 +321,8 @@ $( document ).ready(function() {
 	$('.form_init').click(function () {
 		$('#SERG_modal').removeClass('-hide');
 	});
+
+
 
 
 
@@ -264,6 +339,13 @@ $( document ).ready(function() {
 		}
 	});
 
+
+
+/*
+$( "input" ).change(function() {
+  $(this).removeClass('inputError');
+});
+*/
 
 
 
