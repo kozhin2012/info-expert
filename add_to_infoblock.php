@@ -1,5 +1,5 @@
 <?php
-sleep(10);
+//sleep(10);
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");
 \Bitrix\Main\Loader::includeModule('iblock');

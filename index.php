@@ -120,7 +120,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 
 <div class="SOURCE">
-	<form class="serg_form col-10">
+	<form class="serg_form disableSelect col-10">
 		<h1>Регистрация</h1>
 
 		<div class="row-01010 COL-10">
@@ -188,7 +188,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 </style>
 
 <div id="SERG_modal" class="col-010 -hide">
-	<form class="serg_form col-10">
+	<form class="serg_form disableSelect col-10">
 		<h1>Регистрация</h1>
 
 		<label for="ClientName">Имя:</label>
@@ -213,16 +213,13 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 
 <script>
-$( document ).ready(function() {
-
-    console.log("ready!");
-
-
 	function refreshModalState(){
 		$('input').val("");
 		$('#SERG_modal').removeClass('disableSelect');
+		$('.serg_form').removeClass('disableSelect');
 		$('#SERG_modal').addClass('-hide');
 	}
+
 
 
 	function afterFormSubmit(thiss){
@@ -236,6 +233,7 @@ $( document ).ready(function() {
 
 	  //Фризим модалку до получения ответа от сервера
 	  $('#SERG_modal').addClass('disableSelect');
+	  $('.serg_form').addClass('disableSelect');
 
 
         $.ajax({
@@ -317,16 +315,23 @@ $( document ).ready(function() {
 
 
 
+
+
+
+
+
+$( document ).ready(function() {
+
+    console.log("ready!");
+
+	//Когда всё загрузилось разблокируем формы
+	refreshModalState();
+
+
 	//Вызываем модалку
 	$('.form_init').click(function () {
 		$('#SERG_modal').removeClass('-hide');
 	});
-
-
-
-
-
-
 
 	//Убираем модалку при клике вне формы
 	$('#SERG_modal').click(function (e) {
@@ -338,17 +343,6 @@ $( document ).ready(function() {
 			$("#SERG_modal").addClass('-hide'); // скрываем его
 		}
 	});
-
-
-
-/*
-$( "input" ).change(function() {
-  $(this).removeClass('inputError');
-});
-*/
-
-
-
 
 
 });
