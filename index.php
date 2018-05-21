@@ -100,15 +100,32 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 		margin:10px;
 	}
 
-	.inputError{
-		border: solid red;
+
+
+
+
+	.errorDescription{
+		visibility: hidden;
+		font-size:.7em;
+		line-height: 1em;
+		color:red;
+	}
+
+
+	.inputError label{
+		color:red;
+	}
+
+	.inputError input{
+		/*border: solid red;*/
     	color: red;
 	}
 
-	.errorDescription{
-		color:red;
-		font-size:.7em;
+	.inputError .errorDescription{
+		visibility: visible;
 	}
+
+
 </style>
 
 
@@ -126,14 +143,14 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 		<div class="row-01010 COL-10">
 			<div class="col-10 form_elem_container">
 				<label for="ClientName">Имя*:</label>
-				<input type="text" name="ClientName" required>
-				<div class="errorDescription"></div>
+				<input type="text_req" name="ClientName">
+				<div class="errorDescription">Поле не должно быть пустым</div>
 			</div>
 
 			<div class="col-10 form_elem_container">
 				<label for="ClientEmail">Email*:</label>
-				<input type="email" name="ClientEmail" required>
-				<div class="errorDescription"></div>
+				<input type="email_req" name="ClientEmail">
+				<div class="errorDescription">Неверный формат email</div>
 			</div>
 		</div>
 	
@@ -183,20 +200,25 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
     }
 
 
-
-
 </style>
 
 <div id="SERG_modal" class="col-010 -hide">
 	<form class="serg_form disableSelect col-10">
 		<h1>Регистрация</h1>
 
-		<label for="ClientName">Имя:</label>
-		<input type="text" name="ClientName" required>
-	
-		<label for="ClientEmail">Email:</label>
-		<input type="email" name="ClientEmail" required>
-	
+		<div class="row-01010 COL-10">
+			<div class="col-10 form_elem_container">
+				<label for="ClientName">Имя*:</label>
+				<input type="text_req" name="ClientName">
+				<div class="errorDescription">Обязательное поле</div>
+			</div>
+
+			<div class="col-10 form_elem_container">
+				<label for="ClientEmail">Email*:</label>
+				<input type="email_req" name="ClientEmail">
+				<div class="errorDescription">Неверный формат email</div>
+			</div>
+		</div>
 
 		<button class="serg_button form_sub" name="ClientWhat" type="submit">Зарегистрироваться</button>
 
@@ -224,7 +246,7 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 
 	function afterFormSubmit(thiss){
 
-	  validateEmail(thiss);
+		//validateEmail(thiss);
 
 	  var formdata = thiss.serialize();
 	  var buttondata = thiss.find('button[name=ClientWhat]').text();
@@ -278,16 +300,45 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 	}
 
 
-	//Дополнительная валидация email
-	function validateEmail(thiss){
-		var emailvalue = thiss.find('input[name=ClientEmail]').val();
+	//Валидация текстовых полей
+	function validateTypeText(thiss){
+		var textvalue = thiss.find('input[type=text_req]');
+		var errors = 0;
+
+		textvalue.each(function( index ) {
+			//console.log( index + ": " + $( this ).val() );
+			if($( this ).val() != ""){
+				$( this ).parent().removeClass('inputError'); //Удаляем стили ошибки
+			}
+			else{
+				errors++;
+				$( this ).parent().addClass('inputError'); //Добавляем стили ошибки
+			}
+		});
+
+		return errors;
+
+	}
+
+	//Валидация email
+	function validateTypeEmail(thiss){
+
 		var pattern = /^([a-z0-9_\.-])+@[a-z0-9-]+\.([a-z]{2,4}\.)?[a-z]{2,4}$/i;
-		if(pattern.test(emailvalue)){
-			return "OK";
-		}
-		else{
-			return "NO";
-		}
+		var textvalue = thiss.find('input[type=email_req]');
+		var errors = 0;
+
+		textvalue.each(function( index ) {
+			//console.log( index + ": " + $( this ).val() );
+			if(pattern.test($( this ).val())){
+				$( this ).parent().removeClass('inputError'); //Удаляем стили ошибки
+			}
+			else{
+				errors++;
+				$( this ).parent().addClass('inputError'); //Добавляем стили ошибки
+			}
+		});
+
+		return errors;
 	}
 
 
@@ -297,17 +348,17 @@ $APPLICATION->SetTitle("Подтверждение заявки на почту"
 		event.preventDefault();
 		var thiss = $( this );
 
-		if(validateEmail(thiss) == "OK"){
+		//Запускаем проверки
+		var text = validateTypeText(thiss);
+		var email = validateTypeEmail(thiss);
+
+		var totalErrors = text + email;
+		console.log("totalErrors: " + totalErrors);
+
+		if(totalErrors == 0){
 			afterFormSubmit(thiss);
 		}
-		else{
-			swal({
-				type: "error",
-				title: "<small>Ошибка!</small>",
-				text: "Введённый email не корректен.",
-				html: true
-			});
-		}
+
 
 	});
 	//ВАЛИДАЦИЯ ФОРМЫ END

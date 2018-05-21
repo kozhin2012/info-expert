@@ -93,9 +93,40 @@ body{margin:0;padding:0;}
 .grid-12 > * {width: 8.333%;}
 
 
+@media (max-width: 1900px) {
+
+    .GAP-notebook-1 {margin: -.1rem 0 0 -.1rem;}
+    .GAP-notebook-2 {margin: -.25rem 0 0 -.25rem;}
+    .GAP-notebook-3 {margin: -.5rem 0 0 -.5rem;}
+    .GAP-notebook-4 {margin: -1rem 0 0 -1rem;}
+    .GAP-notebook-5 {margin: -1.5rem 0 0 -1.5rem;}
+    .GAP-notebook-6 {margin: -2rem 0 0 -2rem;}
+
+    .GAP-notebook-1 > * {padding: .1rem 0 0 .1rem;}
+    .GAP-notebook-2 > * {padding: .25rem 0 0 .25rem;}
+    .GAP-notebook-3 > * {padding: .5rem 0 0 .5rem;}
+    .GAP-notebook-4 > * {padding: 1rem 0 0 1rem;}
+    .GAP-notebook-5 > * {padding: 1.5rem 0 0 1.5rem;}
+    .GAP-notebook-6 > * {padding: 2rem 0 0 2rem;}
 
 
-@media (max-width: 1200px) {
+    .GRID-notebook-1  > * {width:  100%;}
+    .GRID-notebook-2  > * {width: 50%;}
+    .GRID-notebook-3  > * {width: 33.333%;}
+    .GRID-notebook-4  > * {width: 25%;}
+    .GRID-notebook-5  > * {width: 20%;}
+    .GRID-notebook-6  > * {width: 16.666%;}
+    .GRID-notebook-7  > * {width: 14.285%;}
+    .GRID-notebook-8  > * {width: 12.5%;}
+    .GRID-notebook-9  > * {width: 11.111%;}
+    .GRID-notebook-10 > * {width: 10%;}
+    .GRID-notebook-11 > * {width: 9.091%;}
+    .GRID-notebook-12 > * {width: 8.333%;}
+
+}
+
+
+@media (max-width: 1400px) {
 
     .GAP-tablet-1 {margin: -.1rem 0 0 -.1rem;}
     .GAP-tablet-2 {margin: -.25rem 0 0 -.25rem;}
@@ -128,7 +159,7 @@ body{margin:0;padding:0;}
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
 
     .GAP-mobile-1 {margin: -.1rem 0 0 -.1rem;}
     .GAP-mobile-2 {margin: -.25rem 0 0 -.25rem;}
@@ -171,7 +202,7 @@ body{margin:0;padding:0;}
 	display:none;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1900px) {
 	.-HIDE{
 		display:none;
 	}
@@ -181,16 +212,15 @@ body{margin:0;padding:0;}
 
 body > *,
 .-short{
+	max-width:1280px;
     width: 100%;
-    max-width:1280px;
     min-width:300px;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .-wide{
     max-width: 100%;
     width: 100%;
+	min-width:300px;
     overflow: hidden;
 }
 
